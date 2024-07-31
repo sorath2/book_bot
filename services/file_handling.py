@@ -24,7 +24,15 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
 
 
 def prepare_book(path: str) -> None:
-    pass
+    with open(path, encoding='utf-8') as file:
+        text = file.read()
+        start = 0
+        count = 1
+        while len(text) > start:
+            line, len_line = _get_part_text(text, start, PAGE_SIZE)
+            book[count] = line.lstrip()
+            start += len_line
+            count += 1
 
 
 prepare_book(os.path.join(sys.path[0], os.path.normpath(BOOK_PATH)))
